@@ -3,6 +3,7 @@ package net.server.games.countdowns;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.server.games.Main;
+import net.server.games.role.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -35,6 +36,11 @@ public class RoleCountcown extends Countdown{
                         break;
                     case 0:
                         stop();
+                        plugin.getRoleManager().calculateRoles();
+                        for(Player current : plugin.getPlayers()) {
+                            Role playerRole = plugin.getRoleManager().getPlayerRole(current);
+                            current.sendMessage("§7Deine Rolle: §l" + playerRole.getChatColor() + playerRole.getName());
+                        }
                         Bukkit.broadcastMessage(Main.Prefix + "§aDie §6Rollen §awurden bekannt gegeben.");
                         for(Player player : Bukkit.getOnlinePlayers()) {
                             player.sendTitle("§aDie §6Rollen §awurden bekannt gegeben.", "Viel Spaß.");

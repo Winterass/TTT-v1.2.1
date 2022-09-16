@@ -7,6 +7,7 @@ import net.server.games.gamestates.GamestateManager;
 import net.server.games.listeners.HubListener;
 import net.server.games.listeners.PlayerLobbyConnectionListener;
 import net.server.games.listeners.VotingListener;
+import net.server.games.role.RoleManager;
 import net.server.games.voting.Map;
 import net.server.games.voting.Voting;
 import org.bukkit.Bukkit;
@@ -23,6 +24,7 @@ public final class Main extends JavaPlugin {
     private ArrayList<Player> players;
     private ArrayList<Map> maps;
     private Voting voting;
+    private RoleManager roleManager;
 
     public static final String Prefix = "§7[§cTTT§7] §r",
                                 NO_PERMISSION = Prefix + "§cDazu hast du keine Rechte";
@@ -40,6 +42,7 @@ public final class Main extends JavaPlugin {
 
     private void init(PluginManager pluginManager) {
         initVoting();
+        roleManager = new RoleManager(this);
 
         getCommand("setup").setExecutor(new SetupCommand(this));
         getCommand("start").setExecutor(new StartCommand(this));
@@ -87,6 +90,10 @@ public final class Main extends JavaPlugin {
 
     public ArrayList<Map> getMaps() {
         return maps;
+    }
+
+    public RoleManager getRoleManager() {
+        return roleManager;
     }
 
     /* @Override
