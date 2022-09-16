@@ -1,0 +1,13 @@
+name: Bedwars
+version: '${project.version}'
+main: net.server.games.Main
+api-version: 1.16
+authors: [ Timo, Winterass ]
+description: Bedwars Plugin Version 1.0
+commands:
+  setup:
+    description: Setze diverse Einstellungen
+
+  start:
+    description: Starte das spiel
+
