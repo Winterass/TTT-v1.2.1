@@ -22,7 +22,7 @@ public class VotingListener implements Listener {
 
     @EventHandler
     public void handleVotingMenuOpener(PlayerInteractEvent event) {
-        if(!(event.getAction() == Action.LEFT_CLICK_AIR)) return;
+        if(!(event.getAction() == Action.RIGHT_CLICK_AIR)) return;
         Player player = event.getPlayer();
         ItemStack item = player.getItemInHand();
         if(item.getItemMeta() == null) return;

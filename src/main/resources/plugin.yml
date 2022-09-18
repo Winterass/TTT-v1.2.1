@@ -11,3 +11,8 @@ commands:
   start:
     description: Starte das spiel
 
+  lobby:
+    description: Schickt dich in die Lobby
+
+  connect:
+

@@ -8,7 +8,7 @@ public enum Role {
     DETECTIVE("Detective", ChatColor.BLUE),
     TRAITOR("Traitor", ChatColor.RED);
 
-    private Role(String name, ChatColor chatColor) {
+    Role(String name, ChatColor chatColor) {
         this.name = name;
         this.chatColor = chatColor;
     }

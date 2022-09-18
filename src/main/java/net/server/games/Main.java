@@ -1,12 +1,11 @@
 package net.server.games;
 
+import net.server.games.commands.HubCommand;
 import net.server.games.commands.SetupCommand;
 import net.server.games.commands.StartCommand;
 import net.server.games.gamestates.GameState;
 import net.server.games.gamestates.GamestateManager;
-import net.server.games.listeners.HubListener;
-import net.server.games.listeners.PlayerLobbyConnectionListener;
-import net.server.games.listeners.VotingListener;
+import net.server.games.listeners.*;
 import net.server.games.role.RoleManager;
 import net.server.games.voting.Map;
 import net.server.games.voting.Voting;
@@ -25,6 +24,7 @@ public final class Main extends JavaPlugin {
     private ArrayList<Map> maps;
     private Voting voting;
     private RoleManager roleManager;
+    private static Main plugin;
 
     public static final String Prefix = "§7[§cTTT§7] §r",
                                 NO_PERMISSION = Prefix + "§cDazu hast du keine Rechte";
@@ -33,10 +33,12 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         gamestateManager = new GamestateManager(this);
         players = new ArrayList<>();
+        plugin = this;
 
         gamestateManager.setGameState(GameState.LOBBY_STATE);
 
         init(Bukkit.getPluginManager());
+
 
     }
 
@@ -46,10 +48,13 @@ public final class Main extends JavaPlugin {
 
         getCommand("setup").setExecutor(new SetupCommand(this));
         getCommand("start").setExecutor(new StartCommand(this));
+        getCommand("lobby").setExecutor(new HubCommand());
 
         pluginManager.registerEvents(new PlayerLobbyConnectionListener(this), this);
         pluginManager.registerEvents(new VotingListener(this), this);
-        pluginManager.registerEvents(new HubListener(), this);
+        pluginManager.registerEvents(new HubItem(), this);
+
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
 
     private void initVoting() {
@@ -74,6 +79,14 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
 
+    }
+
+    public static Main getPlugin() {
+        return plugin;
+    }
+
+    private static void setPlugin(Main plugin) {
+        Main.plugin = plugin;
     }
 
     public GamestateManager getGamestateManager() {

@@ -7,6 +7,8 @@ import net.server.games.role.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+
 public class RoleCountcown extends Countdown{
 
     private Main plugin;
@@ -37,9 +39,16 @@ public class RoleCountcown extends Countdown{
                     case 0:
                         stop();
                         plugin.getRoleManager().calculateRoles();
+
+                        ArrayList<String> traitorPlayers = plugin.getRoleManager().getTraitorPlayers();
                         for(Player current : plugin.getPlayers()) {
                             Role playerRole = plugin.getRoleManager().getPlayerRole(current);
                             current.sendMessage("§7Deine Rolle: §l" + playerRole.getChatColor() + playerRole.getName());
+                            current.sendMessage(playerRole.getChatColor() + current.getName());
+
+                            if(playerRole == Role.TRAITOR) {
+                                current.sendMessage("§7Die Traitor sind: §c§l" + String.join(",", traitorPlayers));
+                            }
                         }
                         Bukkit.broadcastMessage(Main.Prefix + "§aDie §6Rollen §awurden bekannt gegeben.");
                         for(Player player : Bukkit.getOnlinePlayers()) {
