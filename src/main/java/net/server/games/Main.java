@@ -1,5 +1,6 @@
 package net.server.games;
 
+import net.server.games.commands.BuildCommand;
 import net.server.games.commands.HubCommand;
 import net.server.games.commands.SetupCommand;
 import net.server.games.commands.StartCommand;
@@ -39,8 +40,6 @@ public final class Main extends JavaPlugin {
         gamestateManager.setGameState(GameState.LOBBY_STATE);
 
         init(Bukkit.getPluginManager());
-
-
     }
 
     private void init(PluginManager pluginManager) {
@@ -51,12 +50,14 @@ public final class Main extends JavaPlugin {
         getCommand("setup").setExecutor(new SetupCommand(this));
         getCommand("start").setExecutor(new StartCommand(this));
         getCommand("lobby").setExecutor(new HubCommand());
+        getCommand("build").setExecutor(new BuildCommand(this));
 
         pluginManager.registerEvents(new PlayerLobbyConnectionListener(this), this);
         pluginManager.registerEvents(new VotingListener(this), this);
         pluginManager.registerEvents(new HubItem(), this);
         pluginManager.registerEvents(new GameProgressListener(this), this);
         pluginManager.registerEvents(gameProtectionListener, this);
+        pluginManager.registerEvents(new ChatListener(this), this);
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }

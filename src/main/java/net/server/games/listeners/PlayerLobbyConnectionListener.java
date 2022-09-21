@@ -7,9 +7,11 @@ import net.server.games.util.ConfigLocationUtil;
 import net.server.games.util.ItemBuilder;
 import net.server.games.voting.Voting;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -30,7 +32,7 @@ public class PlayerLobbyConnectionListener implements Listener {
         hubItem = new ItemBuilder(Material.MAGMA_CREAM).setDisplayName(PlayerLobbyConnectionListener.HUB_ITEM_NAME).build();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void handlePlayerJoin(PlayerJoinEvent event) {
         if(!(plugin.getGamestateManager().getCurrentGameState() instanceof LobbyState)) return;
         Player player = event.getPlayer();
@@ -38,8 +40,15 @@ public class PlayerLobbyConnectionListener implements Listener {
         event.setJoinMessage("§7[§a+§7] " + player.getDisplayName() + " §7ist dem Spiel beigetreten.");
 
         player.getInventory().clear();
+        player.getInventory().setChestplate(null);
+        player.getInventory().setHelmet(null);
         player.getInventory().setItem(4, voteItem);
         player.getInventory().setItem(8, hubItem);
+        player.setGameMode(GameMode.SURVIVAL);
+        for(Player current : Bukkit.getOnlinePlayers()) {
+            current.showPlayer(player);
+            player.showPlayer(current);
+        }
 
         ConfigLocationUtil locationUtil = new ConfigLocationUtil(plugin, "Lobby");
         if(locationUtil.loadLocation() != null) {

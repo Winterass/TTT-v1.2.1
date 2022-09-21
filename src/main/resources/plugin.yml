@@ -14,5 +14,6 @@ commands:
   lobby:
     description: Schickt dich in die Lobby
 
-  connect:
+  build:
+    description: Lässt dich Bauen und die Protection Listener außer Kraft Setzten
 

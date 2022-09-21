@@ -16,18 +16,22 @@ public class IngameState extends GameState{
 
     private Main plugin;
     private Map map;
-    private ArrayList<Player> players;
+    private ArrayList<Player> players, spectators;
     private RoleCountcown roleCountcown;
+    private boolean grace;
 
     private Role winnigRole;
 
     public IngameState(Main plugin) {
         this.plugin = plugin;
         roleCountcown = new RoleCountcown(plugin);
+        spectators = new ArrayList<>();
     }
 
     @Override
     public void start() {
+        grace = true;
+
         Collections.shuffle(plugin.getPlayers());
         players = plugin.getPlayers();
 
@@ -41,6 +45,7 @@ public class IngameState extends GameState{
             current.setFoodLevel(20);
             current.getInventory().clear();
             current.setGameMode(GameMode.SURVIVAL);
+            plugin.getGameProtectionListener().getBuildModePlayers().remove(current.getName());
         }
 
         roleCountcown.start();
@@ -56,6 +61,16 @@ public class IngameState extends GameState{
         }
     }
 
+    public void addSpectator(Player player) {
+        spectators.add(player);
+        player.setGameMode(GameMode.CREATIVE);
+        player.teleport(map.getSpectatorLocation());
+
+        for(Player current : Bukkit.getOnlinePlayers()) {
+            current.hidePlayer(player);
+        }
+    }
+
     @Override
     public void stop() {
         for(Player player : Bukkit.getOnlinePlayers()) {
@@ -65,4 +80,15 @@ public class IngameState extends GameState{
         Bukkit.broadcastMessage(Main.Prefix +  "§7Die Sieger sind die: " + winnigRole.getChatColor() + winnigRole.getName());
     }
 
+    public void setGrace(boolean grace) {
+        this.grace = grace;
+    }
+
+    public boolean isInGrace() {
+        return grace;
+    }
+
+    public ArrayList<Player> getSpectators() {
+        return spectators;
+    }
 }

@@ -3,6 +3,7 @@ package net.server.games.countdowns;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.server.games.Main;
+import net.server.games.gamestates.IngameState;
 import net.server.games.role.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -38,6 +39,8 @@ public class RoleCountcown extends Countdown{
                         break;
                     case 0:
                         stop();
+                        IngameState ingameState = (IngameState) plugin.getGamestateManager().getCurrentGameState();
+                        ingameState.setGrace(false);
                         plugin.getRoleManager().calculateRoles();
 
                         ArrayList<String> traitorPlayers = plugin.getRoleManager().getTraitorPlayers();
