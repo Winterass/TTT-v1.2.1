@@ -25,6 +25,7 @@ public final class Main extends JavaPlugin {
     private Voting voting;
     private RoleManager roleManager;
     private static Main plugin;
+    private GameProtectionListener gameProtectionListener;
 
     public static final String Prefix = "§7[§cTTT§7] §r",
                                 NO_PERMISSION = Prefix + "§cDazu hast du keine Rechte";
@@ -45,6 +46,7 @@ public final class Main extends JavaPlugin {
     private void init(PluginManager pluginManager) {
         initVoting();
         roleManager = new RoleManager(this);
+        gameProtectionListener = new GameProtectionListener(this);
 
         getCommand("setup").setExecutor(new SetupCommand(this));
         getCommand("start").setExecutor(new StartCommand(this));
@@ -53,6 +55,8 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new PlayerLobbyConnectionListener(this), this);
         pluginManager.registerEvents(new VotingListener(this), this);
         pluginManager.registerEvents(new HubItem(), this);
+        pluginManager.registerEvents(new GameProgressListener(this), this);
+        pluginManager.registerEvents(gameProtectionListener, this);
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
@@ -107,6 +111,10 @@ public final class Main extends JavaPlugin {
 
     public RoleManager getRoleManager() {
         return roleManager;
+    }
+
+    public GameProtectionListener getGameProtectionListener() {
+        return gameProtectionListener;
     }
 
     /* @Override
