@@ -1,6 +1,5 @@
 package net.server.games.listeners;
 
-import io.papermc.paper.event.player.AsyncChatEvent;
 import net.server.games.Main;
 import net.server.games.gamestates.IngameState;
 import net.server.games.role.Role;

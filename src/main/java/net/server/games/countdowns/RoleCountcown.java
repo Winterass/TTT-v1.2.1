@@ -27,12 +27,12 @@ public class RoleCountcown extends Countdown{
                 switch (seconds) {
                     case 30:
                         for(Player player : Bukkit.getOnlinePlayers()) {
-                            player.sendTitle("§7Die §6Rollen §7werden in §6 " + seconds + " Sekunden", "§7bekannt gegeben.");
+                            player.sendTitle("§7Die §6Rollen §7werden in §6" + seconds + "Sekunden", "§7bekannt gegeben.");
                         }
-                        Bukkit.broadcastMessage(Main.Prefix + "§7Die §6Rollen §7werden in §6 " + seconds + " Sekunden §7bekannt gegeben.");
+                        Bukkit.broadcastMessage(Main.Prefix + "§7Die §6Rollen §7werden in §6" + seconds + "Sekunden §7bekannt gegeben.");
                         break;
                     case 15: case 10: case 5: case 3: case 2:
-                        Bukkit.broadcastMessage(Main.Prefix + "§7Noch §6 " + seconds + " Sekunden §7bis zur Rollenbekanntgabe.");
+                        Bukkit.broadcastMessage(Main.Prefix + "§7Noch §6" + seconds + "Sekunden §7bis zur Rollenbekanntgabe.");
                         break;
                     case 1:
                         Bukkit.broadcastMessage(Main.Prefix + "§7Noch §6eine Sekunde §7bis zur Rollenbekanntgabe");
@@ -64,13 +64,13 @@ public class RoleCountcown extends Countdown{
                 }
                 for(Player player : Bukkit.getOnlinePlayers()){
                     if(seconds == 30){
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Die §6Rollen §7werden in §6 " +
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Die §6Rollen §7werden in §6" +
                                 seconds +
-                                " Sekunden §7bekannt gegeben."));
+                                "Sekunden §7bekannt gegeben."));
                     }else if(seconds > 1 ){
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Noch §6 " +
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Noch §6" +
                                 seconds +
-                                " Sekunden §7bis zur Rollenbekanntgabe."));
+                                "Sekunden §7bis zur Rollenbekanntgabe."));
                     }else if(seconds == 1){
                         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§7Noch §6eine Sekunde §7bis zur Rollenbekanntgabe"));
                     }else if(seconds == 0){

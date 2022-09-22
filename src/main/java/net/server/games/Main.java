@@ -58,6 +58,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new GameProgressListener(this), this);
         pluginManager.registerEvents(gameProtectionListener, this);
         pluginManager.registerEvents(new ChatListener(this), this);
+        pluginManager.registerEvents(new ChestListener(this), this);
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
